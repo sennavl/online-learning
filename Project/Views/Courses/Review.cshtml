@@ -1,0 +1,27 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Review</h2>
+
+@using (Html.BeginForm("Review", "Courses", FormMethod.Post, new { id = "addReview" }))
+{
+    <div class="row">
+        <div class="8u$">
+            @Html.TextBoxFor(model => model.Rating.score, new { placeholder = "Score (0-5)", @type = "number" })
+            @Html.ValidationMessageFor(m => m.Rating.score, null, new { @class = "text-danger" })
+        </div>
+
+        @Html.Hidden((string)(ViewBag.CourseId + ""))
+
+        <!-- Break -->
+        <div class="8u$">
+            <ul class="actions">
+                <li><input type="submit" value="Add review" class="special" /></li>
+            </ul>
+        </div>
+    </div>
+}

@@ -1,0 +1,77 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="courses_lib" style="margin-top: 50px;">
+    <section>
+        <header class="major">
+            <h2>Your courses</h2>
+        </header>
+
+        <div style="margin-bottom: 20px;">
+            @Html.ActionLink("Add new course", "AddCourse", "Admin", null, new { @class = "button special" })
+        </div>
+
+        <div class="list posts">
+            @for (var i = 0; i < Model.Courses.Count; i++)
+            {
+                <article>
+                    @if (ViewBag.Files[i] == "default.jpg")
+                    {
+                        <a href="~/Courses/Detail/@Model.Courses[i].id" class="image"><img src="~/Content/attatchments/default.jpg" alt="" /></a>
+                    }
+                    else
+                    {
+                        <a href="~/Courses/Detail/@Model.Courses[i].id" class="image"><img src="~/Content/MainImages/@Model.Courses[i].id/@ViewBag.Files[i]" alt="" /></a>
+                    }
+                    <h3>@Html.ActionLink((string)@Model.Courses[i].title, "Detail", "Courses", new { @Model.Courses[i].id }, null)</h3>
+                    <p>@Model.Courses[i].introduction</p>
+                    <i class="fa fa-globe" aria-hidden="true">@Model.Courses[i].Language.name</i>
+                    <i class="fa fa-tachometer" aria-hidden="true">@Model.Courses[i].Level.name</i>
+                    <i class="fa fa-graduation-cap" aria-hidden="true">@Model.Courses[i].Category.name</i>
+                    @if (ViewBag.Ratings[i] == 6)
+                    {
+                        <i class="fa fa-star" aria-hidden="true">No rating yet</i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-star" aria-hidden="true">@ViewBag.Ratings[i]</i>
+                    }
+                    <i class="fa fa-clock-o" aria-hidden="true">@Model.Courses[i].length</i>
+                    <i class="fa fa-eur" aria-hidden="true">@Model.Courses[i].price</i>
+                    <ul class="actions">
+                        <li><a href="~/Courses/Detail/@Model.Courses[i].id" class="button">View</a></li>
+                        <li>@Html.ActionLink("Edit", "EditCourse", "Admin", new { id = Model.Courses[i].id }, new { @class = "button" })</li>
+                        <li>@Html.ActionLink("Edit sections", "Sections", "Admin", new { id = Model.Courses[i].id }, new { @class = "button" })</li>
+                        @using (Html.BeginForm("DeleteCourse", "Admin", FormMethod.Post, new { id = "deleteForm" }))
+                        {
+                            @Html.Hidden("id", @Model.Courses[i].id)
+
+                            <li><input type="submit" value="Delete entire course" class="button special" style="float:right;" onclick="return confirm('Are you sure you want to delete this course?');" /></li>
+
+                        }
+
+                    </ul>
+                </article>
+            }
+        </div>
+        <div class="12u$">
+            <ul class="pagination"></ul>
+        </div>
+    </section>
+</div>
+
+@* http://listjs.com/docs/plugins/pagination/ *@
+
+
+@section scripts {
+    <script>
+        new List('courses_lib', {
+            page: 6,
+            plugins: [ListPagination({})]
+        })
+    </script>
+}

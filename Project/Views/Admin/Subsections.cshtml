@@ -1,0 +1,41 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "Subsections";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <h2>@Html.ActionLink("" + (string)ViewBag.Section.title, "Sections", "Admin", new { id = ViewBag.CourseId }, null)</h2>
+
+    <h3>Subsections</h3>
+
+    <div>
+        @Html.ActionLink("Add subsection", "AddSubsection", "Admin", new { id = ViewBag.Section.id }, new { @class = "button" })
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var subsectionCourse in ViewBag.Subsections)
+                {
+                    <tr>
+                        <td>@subsectionCourse.title</td>
+                        <td>@Html.ActionLink("Edit", "EditSubsection", "Admin", new { id = (string)("" + subsectionCourse.id) }, new { @class = "button", style = "float:right;" })</td>
+                        @using (Html.BeginForm("DeleteSubsection", "Admin", FormMethod.Post, new { id = "deleteSubsectionForm" }))
+                        {
+                            @Html.Hidden("idSubsection", (string)("" + subsectionCourse.id))
+
+                            <td><input type="submit" value="Delete subsection" class="button special" onclick="return confirm('Are you sure you want to delete this subsection?');" style="float:right;" /></td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

@@ -1,0 +1,28 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "EditSection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <h2>Edit Section</h2>
+
+    @using (Html.BeginForm("EditSection", "Admin", FormMethod.Post))
+    {
+        <div class="row">
+            @Html.Hidden("idCourse", Model.Section.course_id)
+            <div class="8u$">
+                @Html.TextBoxFor(model => model.Section.title, new { placeholder = "Title" })
+                @Html.ValidationMessageFor(m => m.Section.title, null, new { @class = "text-danger" })
+            </div>
+
+            <!-- Break -->
+            <div class="8u$">
+                <ul class="actions">
+                    <li><input type="submit" value="Edit section" class="special" /></li>
+                </ul>
+            </div>
+        </div>
+    }
+</section>

@@ -1,0 +1,43 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "Sections";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Course.title</h2>
+
+<div>
+    @if (!ViewBag.AlreadyVoted && !ViewBag.IsOwner)
+    {
+        <h3>@Html.ActionLink("Leave a review", "Review", "Courses", new { id = ViewBag.Course.id }, null)</h3>
+    }
+    else if(ViewBag.IsOwner){
+        <h3>You can't vote because you are the owner of this course.</h3>
+    }
+    else
+    {
+        <h3>You have already voted!</h3>
+    }
+
+</div>
+
+<h3>Sections</h3>
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sectionCourse in ViewBag.Sections)
+            {
+                <tr>
+                    <td>@sectionCourse.title</td>
+                    <td>@Html.ActionLink("View", "Subsections", "Courses", new { id = (string)("" + sectionCourse.id) }, new { @class = "button special", style = "float:right;" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="senna_vanlonders_OnlineLearning" Class="OnlineLearningDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=10.129.28.184\MSSQLSERVER2016;Initial Catalog=senna_vanlonders_OnlineLearning;Persist Security Info=True;User ID=senna_vanlonders_r0621673" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="senna_vanlonders_OnlineLearningConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Categories" Member="Categories">
+    <Type Name="Category">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Category_Course" Member="Courses" ThisKey="id" OtherKey="category_id" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="senna_vanlonders_r0621673.Ratings" Member="Ratings">
+    <Type Name="Rating">
+      <Column Name="course_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="score" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Rating" Member="Course" ThisKey="course_id" OtherKey="id" Type="Course" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="User_Rating" Member="User" ThisKey="user_id" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Courses" Member="Courses">
+    <Type Name="Course">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Column Name="length" Type="System.TimeSpan" DbType="Time NOT NULL" CanBeNull="false" />
+      <Column Name="introduction" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="last_updated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="language_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="level_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="category_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Rating" Member="Ratings" ThisKey="id" OtherKey="course_id" Type="Rating" />
+      <Association Name="Course_Section" Member="Sections" ThisKey="id" OtherKey="course_id" Type="Section" />
+      <Association Name="Course_Subscription" Member="Subscriptions" ThisKey="id" OtherKey="course_id" Type="Subscription" />
+      <Association Name="Category_Course" Member="Category" ThisKey="category_id" OtherKey="id" Type="Category" IsForeignKey="true" />
+      <Association Name="Language_Course" Member="Language" ThisKey="language_id" OtherKey="id" Type="Language" IsForeignKey="true" />
+      <Association Name="Level_Course" Member="Level" ThisKey="level_id" OtherKey="id" Type="Level" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Languages" Member="Languages">
+    <Type Name="Language">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Language_Course" Member="Courses" ThisKey="id" OtherKey="language_id" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Levels" Member="Levels">
+    <Type Name="Level">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Level_Course" Member="Courses" ThisKey="id" OtherKey="level_id" Type="Course" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Ratings" Member="Rating1s">
+    <Type Name="Rating1">
+      <Column Name="course_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="score" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Roles" Member="Roles">
+    <Type Name="Role">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Role_User" Member="Users" ThisKey="id" OtherKey="role_id" Type="User" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sections" Member="Sections">
+    <Type Name="Section">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="course_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Section_Subsection" Member="Subsections" ThisKey="id" OtherKey="section_id" Type="Subsection" />
+      <Association Name="Course_Section" Member="Course" ThisKey="course_id" OtherKey="id" Type="Course" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Subscriptions" Member="Subscriptions">
+    <Type Name="Subscription">
+      <Column Name="course_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="time_registered" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="owner" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="visible" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Subscription" Member="Course" ThisKey="course_id" OtherKey="id" Type="Course" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="User_Subscription" Member="User" ThisKey="user_id" OtherKey="id" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Subsections" Member="Subsections">
+    <Type Name="Subsection">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="title" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="section_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="subsection_content" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="Section_Subsection" Member="Section" ThisKey="section_id" OtherKey="id" Type="Section" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="first_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="last_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="job" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="role_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="User_Rating" Member="Ratings" ThisKey="id" OtherKey="user_id" Type="Rating" />
+      <Association Name="User_Subscription" Member="Subscriptions" ThisKey="id" OtherKey="user_id" Type="Subscription" />
+      <Association Name="Role_User" Member="Role" ThisKey="role_id" OtherKey="id" Type="Role" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

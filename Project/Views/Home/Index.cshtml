@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!-- Section -->
+<section>
+    <header class="major">
+        <h2>New courses</h2>
+    </header>
+    <div class="posts">
+        @for (var i = 0; i < Model.TopThreeRecentCourses.Count; i++)
+        {
+            <article>
+                @if (ViewBag.Files[i] == "default.jpg")
+                {
+                    <a href="~/Courses/Detail/@Model.TopThreeRecentCourses[i].id" class="image"><img src="~/Content/attatchments/default.jpg" alt="" /></a>
+                }
+                else
+                {
+                    <a href="~/Courses/Detail/@Model.TopThreeRecentCourses[i].id" class="image"><img src="~/Content/MainImages/@Model.TopThreeRecentCourses[i].id/@ViewBag.Files[i]" alt="" /></a>
+                }
+                <h3>@Html.ActionLink((string)@Model.TopThreeRecentCourses[i].title, "Detail", "Courses", new { @Model.TopThreeRecentCourses[i].id }, null)</h3>
+                <p>@Model.TopThreeRecentCourses[i].introduction</p>
+                <i class="fa fa-globe" aria-hidden="true">@Model.TopThreeRecentCourses[i].Language.name</i>
+                <i class="fa fa-tachometer" aria-hidden="true">@Model.TopThreeRecentCourses[i].Level.name</i>
+                <i class="fa fa-graduation-cap" aria-hidden="true">@Model.TopThreeRecentCourses[i].Category.name</i>
+                @if (ViewBag.Ratings[i] == 6)
+                {
+                    <i class="fa fa-star" aria-hidden="true">No rating yet</i>
+                }
+                else
+                {
+                    <i class="fa fa-star" aria-hidden="true">@ViewBag.Ratings[i]</i>
+                }
+                <i class="fa fa-clock-o" aria-hidden="true">@Model.TopThreeRecentCourses[i].length</i>
+                <i class="fa fa-eur" aria-hidden="true">@Model.TopThreeRecentCourses[i].price</i>
+                <ul class="actions">
+                    <li><a href="~/Courses/Detail/@Model.TopThreeRecentCourses[i].id" class="button">More</a></li>
+                </ul>
+            </article>
+        }
+    </div>
+</section>

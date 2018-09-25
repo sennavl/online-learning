@@ -1,0 +1,55 @@
+@using System.Web.Http
+@using System.Web.Http.Controllers
+@using System.Web.Http.Description
+@using System.Collections.ObjectModel
+@using Project.Areas.HelpPage.Models
+@model Collection<ApiDescription>
+
+@{
+    ViewBag.Title = "ASP.NET Web API Help Page";
+
+    // Group APIs by controller
+    ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
+}
+
+<link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
+<header class="help-page">
+    <div class="content-wrapper">
+        <div class="float-left">
+            <h1>@ViewBag.Title</h1>
+        </div>
+    </div>
+</header>
+<div id="body" class="help-page">
+    <section class="featured">
+        <div class="content-wrapper">
+            <h2>Introduction</h2>
+            <p>
+                There are two api calls.
+            </p>
+            <p>
+                The first one will let you get all courses of the page, without content.
+            </p>
+            <p>
+                The second one can be used to show only the courses of a certain category.
+            </p>
+            <p>
+                Categories:
+            </p>
+            <ul>
+                <li>Marketing</li>
+                <li>Lifestyle</li>
+                <li>Music</li>
+                <li>Development</li>
+                <li>Business</li>
+                <li>Design</li>
+            </ul>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        @foreach (var group in apiGroups)
+        {
+            @Html.DisplayFor(m => group, "ApiGroup")
+        }
+    </section>
+</div>

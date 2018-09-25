@@ -1,0 +1,80 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <header class="main">
+        <h2>@ViewBag.Course.title</h2>
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (!ViewBag.IsSubscribed)
+            {
+                using (Html.BeginForm("Register", "Courses", FormMethod.Post, new { id = "subscribeForm" }))
+                {
+                    @Html.Hidden("id", (string)("" + ViewBag.Course.id))
+                    if (@ViewBag.Course.price == 0)
+                    {
+                        <input type="submit" value="Subscribe for free" class="special" style="float:right;" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Subscribe for @ViewBag.Course.price euros" class="special" style="float:right;" />
+                    }
+                }
+            }
+            else
+            {
+                if (ViewBag.IsVisible)
+                {
+                    @Html.ActionLink("Go to course", "Sections", "Courses", new { id = (string)("" + ViewBag.Course.id) }, new { @class = "button special", style = "float:right;" })
+                }
+                else
+                {
+                    using (Html.BeginForm("Show", "Courses", FormMethod.Post, new { id = "hideForm" }))
+                    {
+                        @Html.Hidden("id", (string)("" + ViewBag.Course.id))
+                        <input type="submit" value="Follow course again" class="button special" style="float:right;" />
+                    }
+                }
+            }
+        }
+        else
+        {
+            @Html.ActionLink("Login to subscribe", "Login", "Account", null, new { @class = "button special", style = "float:right;" })
+        }
+        <h3>@ViewBag.Course.introduction</h3>
+        <p>Created by: @ViewBag.Owner</p>
+        <p>Last updated: @ViewBag.LastUpdated</p>
+        <i class="fa fa-globe" aria-hidden="true">@ViewBag.Course.Language.name</i>
+        <i class="fa fa-tachometer" aria-hidden="true">@ViewBag.Course.Level.name</i>
+        <i class="fa fa-graduation-cap" aria-hidden="true">@ViewBag.Course.Category.name</i>
+        @if (ViewBag.Rating == 6)
+        {
+            <i class="fa fa-star" aria-hidden="true">No rating yet</i>
+        }
+        else
+        {
+            <i class="fa fa-star" aria-hidden="true">@ViewBag.Rating</i>
+        }
+
+        <i class="fa fa-clock-o" aria-hidden="true">@ViewBag.Course.length</i>
+    </header>
+
+    <div class="6u 12u$(small)">
+        @if (ViewBag.File == "default.jpg")
+        {
+            <span class="image main"><img src="~/Content/attatchments/default.jpg" alt="" /></span>
+        }
+        else
+        {
+            <span class="image main"><img src="~/Content/MainImages/@ViewBag.Course.id/@ViewBag.File" alt="" /></span>
+        }
+
+    </div>
+    <div class="12u$">
+        @Html.Raw(ViewBag.Course.description)
+    </div>
+</section>

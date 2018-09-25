@@ -1,0 +1,32 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "SubsectionDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Description</h2>
+
+@Html.Raw(ViewBag.Subsection.subsection_content)
+
+@if (Model.Items.Count != 0)
+{
+    <h2>Downloads</h2>
+    <table>
+        <tr>
+            <th>File Name</th>
+            <th>Link</th>
+        </tr>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>
+                    @item.ToString()
+                </td>
+                <td>
+                    @Html.ActionLink("Download", "Download", new { id = @ViewBag.Subsection.id, itemName = @item.ToString() })
+                </td>
+            </tr>
+        }
+    </table>
+}

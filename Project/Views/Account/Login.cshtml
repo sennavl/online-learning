@@ -1,0 +1,46 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+
+    <!-- Form -->
+    <h3>Login</h3>
+
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-signin" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row uniform">
+            <div class="6u$ 12u$">
+                @Html.LabelFor(m => m.User.email, new { @class = "sr-only" })
+                @Html.TextBoxFor(m => m.User.email, null, new { placeholder = "Email", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User.email, null, new { @class = "text-danger" })
+            </div>
+            <div class="6u 12u$">
+                @Html.LabelFor(m => m.User.password, new { @class = "sr-only" })
+                @Html.PasswordFor(m => m.User.password, new { placeholder = "Password", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User.password, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="6u 12u$">
+                @Html.ActionLink("New? Register now!", "Signup", "Account")
+            </div>
+
+            <!-- Break -->
+            <div class="12u$">
+                <ul class="actions">
+                    <li><input type="submit" value="Log in" class="special" /></li>
+                </ul>
+            </div>
+            @if (ViewBag.WrongCredentials != null)
+            {
+                <span class="field-validation-error text-danger">@ViewBag.WrongCredentials</span>
+            }
+        </div>
+    }
+
+</section>

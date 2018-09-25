@@ -1,0 +1,81 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "EditCourse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <h2>Edit Course</h2>
+
+    @using (Html.BeginForm("EditCourse", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            @Html.Hidden("idCourse", Model.Course.id)
+            <div class="8u$">
+                @Html.TextBoxFor(model => model.Course.title, new { placeholder = "Title" })
+                @Html.ValidationMessageFor(m => m.Course.title, null, new { @class = "text-danger" })
+            </div>
+            <div class="8u$">
+                @Html.TextBoxFor(model => model.Course.introduction, new { placeholder = "Introduction sentence" })
+                @Html.ValidationMessageFor(m => m.Course.introduction, null, new { @class = "text-danger" })
+            </div>
+
+            <!-- Break -->
+            <div class="8u$">
+                @Html.TextAreaFor(model => model.Course.description, new { placeholder = "Description" })
+                @Html.ValidationMessageFor(m => m.Course.description, null, new { @class = "text-danger" })
+            </div>
+
+            <!-- Break -->
+            <div class="8u$">
+                <div class="select-wrapper">
+                    @Html.DropDownListFor(model => model.Course.category_id, Model.CategoryList, "All Categories")
+                    @Html.ValidationMessageFor(m => m.Course.category_id, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!-- Break -->
+            <div class="8u$">
+                <div class="select-wrapper">
+                    @Html.DropDownListFor(model => model.Course.level_id, Model.LevelList, "All levels")
+                    @Html.ValidationMessageFor(m => m.Course.level_id, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!-- Break -->
+            <div class="8u$">
+                <div class="select-wrapper">
+                    @Html.DropDownListFor(model => model.Course.language_id, Model.LanguageList, "All languages")
+                    @Html.ValidationMessageFor(m => m.Course.language_id, null, new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="8u$">
+                @Html.TextBoxFor(model => model.Course.price, new { placeholder = "Price" })
+                @Html.ValidationMessageFor(m => m.Course.price, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="8u$">
+                @Html.TextBoxFor(model => model.Course.length, new { placeholder = "Estimated time needed for course completion" })
+                @Html.ValidationMessageFor(m => m.Course.length, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="8u$">
+                <label for="file">Select an image</label>
+                <input type="file" name="file" id="fileNews" />
+                @if (ViewBag.Notice != null)
+                {
+                    <span class="input-validation-error text-danger">@ViewBag.Notice</span>
+                }
+            </div>
+
+            <!-- Break -->
+            <div class="8u$">
+                <ul class="actions">
+                    <li><input type="submit" value="Edit course" class="special" /></li>
+                </ul>
+            </div>
+        </div>
+    }
+</section>

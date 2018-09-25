@@ -1,0 +1,64 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<section>
+    <!-- Form -->
+    <h3>Sign up</h3>
+
+    @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { @class = "form-signin" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row uniform">
+            <div class="6u 12u$">
+                @Html.LabelFor(m => m.User.first_name, new { @class = "sr-only" })
+                @Html.TextBoxFor(m => m.User.first_name, new { placeholder = "First name", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User.first_name, null, new { @class = "text-danger" })
+            </div>
+            <div class="6u 12u$">
+                @Html.LabelFor(m => m.User.last_name, new { @class = "sr-only" })
+                @Html.TextBoxFor(m => m.User.last_name, new { placeholder = "Last name", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User.last_name, null, new { @class = "text-danger" })
+            </div>
+            <div class="6u$ 12u$">
+                @Html.LabelFor(m => m.User.email, new { @class = "sr-only" })
+                @Html.TextBoxFor(m => m.User.email, new { placeholder = "Email", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User.email, null, new { @class = "text-danger" })
+                @if (ViewBag.AlreadyExists != null)
+                {
+                    <span class="field-validation-error text-danger">@ViewBag.AlreadyExists</span>
+                }
+            </div>
+            <div class="6u 12u$">
+                @Html.LabelFor(m => m.User.password, new { @class = "sr-only" })
+                @Html.PasswordFor(m => m.User.password, new { placeholder = "Password", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User.password, null, new { @class = "text-danger" })
+            </div>
+
+            @foreach (var role in Model.User.RoleList)
+            {
+                <div class="4u 12u$(small)">
+                    @Html.RadioButtonFor(model => model.User.role_id, role.id, new { @id = "role" + role.id })
+                    @Html.Label("role" + role.id, role.name)
+                    @Html.ValidationMessageFor(m => m.User.role_id, null, new { @class = "text-danger" })
+                </div>
+            }
+
+            <div class="6u 12u$">
+                @Html.ActionLink("Already have an account? Log in!", "Login", "Account")
+            </div>
+
+            <!-- Break -->
+            <div class="12u$">
+                <ul class="actions">
+                    <li><input type="submit" value="Sign up" class="special" /></li>
+                </ul>
+            </div>
+        </div>
+    }
+</section>

@@ -1,0 +1,39 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "EditSubsection";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section>
+    <h2>Edit Subsection</h2>
+
+    @using (Html.BeginForm("EditSubsection", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            @Html.Hidden("idSection", Model.Subsection.section_id)
+            <div class="8u$">
+                @Html.TextBoxFor(model => model.Subsection.title, new { placeholder = "Title" })
+                @Html.ValidationMessageFor(m => m.Subsection.title, null, new { @class = "text-danger" })
+            </div>
+
+            <!-- Break -->
+            <div class="8u$">
+                @Html.TextAreaFor(model => model.Subsection.subsection_content, new { placeholder = "Content" })
+                @Html.ValidationMessageFor(m => m.Subsection.subsection_content, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="8u$">
+                <label for="file">Select files you want to offer as download</label>
+                <input type="file" name="file" id="fileNews" multiple />
+            </div>
+
+            <!-- Break -->
+            <div class="8u$">
+                <ul class="actions">
+                    <li><input type="submit" value="Edit subsection" class="special" /></li>
+                </ul>
+            </div>
+        </div>
+    }
+</section>

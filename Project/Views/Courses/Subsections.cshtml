@@ -1,0 +1,28 @@
+﻿@using Project.Models
+@model FilterModel
+@{
+    ViewBag.Title = "Subsections";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Section.title</h2>
+
+<h3>Subsections</h3>
+<div class="table-wrapper">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subsectionCourse in ViewBag.Subsections)
+            {
+                <tr>
+                    <td>@subsectionCourse.title</td>
+                    <td>@Html.ActionLink("View", "SubsectionDetail", "Courses", new { id = (string)("" + subsectionCourse.id) }, new { @class = "button special", style = "float:right;" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

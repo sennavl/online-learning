@@ -1,0 +1,64 @@
+﻿@using Project.Models
+@model FilterModel
+
+@using (Html.BeginForm("Overview", "Courses", FormMethod.Post, new { id = "checkForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row uniform">
+        <h3>Filter</h3>
+
+        <!-- Break -->
+        <div class="12u$">
+            <div>
+                @Html.TextBoxFor(model => model.SearchTerm, new { placeholder = "Searchterm" })
+                @Html.ValidationMessageFor(m => m.SearchTerm, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <!-- Break -->
+        <div class="12u$">
+            <div class="select-wrapper">
+                @Html.DropDownListFor(model => model.CategoryId, Model.CategoryList, "All Categories")
+                @Html.ValidationMessageFor(m => m.CategoryId, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Break -->
+        <div class="12u$">
+            <div class="select-wrapper">
+                @Html.DropDownListFor(model => model.LevelId, Model.LevelList, "All levels")
+                @Html.ValidationMessageFor(m => m.LevelId, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Break -->
+        <div class="12u$">
+            <div class="select-wrapper">
+                @Html.DropDownListFor(model => model.LanguageId, Model.LanguageList, "All languages")
+                @Html.ValidationMessageFor(m => m.LanguageId, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Break -->
+        <div class="12u$">
+            <h4>Price</h4>
+        </div>
+        <div class="12u$">
+            @Html.TextBoxFor(model => model.PriceFrom, new { placeholder = "From" })
+            @Html.ValidationMessageFor(m => m.PriceFrom, null, new { @class = "text-danger" })
+        </div>
+        <div class="12u$">
+            @Html.TextBoxFor(model => model.PriceTo, new { placeholder = "To" })
+            @Html.ValidationMessageFor(m => m.PriceTo, null, new { @class = "text-danger" })
+        </div>
+
+        <!-- Break -->
+        <div class="12u$">
+            <ul class="actions">
+                <li><input type="submit" value="Filter" class="special" /></li>
+            </ul>
+        </div>
+    </div>
+}
